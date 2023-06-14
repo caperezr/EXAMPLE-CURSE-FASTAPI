@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  example-curse-fastapi:
+    container_name: example-curse-fastapi
+    build: .
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - 8031:5000
+    volumes:
+      - .:/app/example-curse-fastapi
