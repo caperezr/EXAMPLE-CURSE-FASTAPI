@@ -1,7 +1,7 @@
 from fastapi import APIRouter
+from routes.electricity.router import router as electricity_router
 
-from .pokemon import router as pokemon
+router = APIRouter()
 
-router = APIRouter(prefix="/poke_api")
+router.include_router(electricity_router, prefix="/electricity")
 
-router.include_router(pokemon)
