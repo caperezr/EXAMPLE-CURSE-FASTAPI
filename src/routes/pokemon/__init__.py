@@ -26,6 +26,15 @@ router.add_api_route(
     response_model=Optional[PokemonResponse],
 )
 
+router.add_api_route(
+    "/byid/{id}",
+    PokemonResource.get_byid_pokemon_filter,
+    methods=["GET"],
+    tags=["pokemon"],
+    name="Get pokemon by id",
+    response_model=Optional[PokemonResponse],
+)
+
 
 """ @router.get("/all")
 def get_all():
