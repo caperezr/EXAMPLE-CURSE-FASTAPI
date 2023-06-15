@@ -32,14 +32,3 @@ router.add_api_route(
     name="Get pokemon by id",
     response_model=Optional[PokemonResponse],
 )
-
-
-""" @router.get("/all")
-def get_all():
-    return {"message": "Información sobre todos los pokemones"} """
-
-
-""" @router.get("/byname/{pokemon_name}")
-def get_pokemon_electricity_by_name(pokemon_name: str):
-    return {"message": f"Información sobre el pokemon  llamado : {pokemon_name}"}
- """
