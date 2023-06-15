@@ -3,9 +3,7 @@ from controllers.pokemon import PokemonResource
 from validators.pokemon.response import PokemonResponse
 from typing import Optional
 
-router = APIRouter(
-    # prefix="/pokemon"
-)
+router = APIRouter(prefix="/pokemon")
 
 # Routes for the API
 router.add_api_route(
