@@ -29,9 +29,6 @@ class PokemonResource(HTTPEndpoint):
     @staticmethod
     async def get_byname_pokemon_filter(datas: PokemonRequest):
         name_pokemon = datas.name
-
-        print("nombre de pokemon requeste: ", name_pokemon)
-
         url = "https://pokeapi.co/api/v2/pokemon/"
         response = requests.get(url)
 
@@ -43,8 +40,6 @@ class PokemonResource(HTTPEndpoint):
                 name = result["name"]
                 url = result["url"]
                 pokemon_data = PokemonResponse(name=name, url=url)
-                print("nombre de pokemon requeste: ", name_pokemon)
-                print("nombre de la lista: ", pokemon_data.name)
                 if pokemon_data.name == name_pokemon:
                     return pokemon_data
         else:
@@ -52,8 +47,6 @@ class PokemonResource(HTTPEndpoint):
 
     @staticmethod
     async def get_byid_pokemon_filter(id: int):
-        print("ID de Pokemon solicitado:", id)
-
         url = f"https://pokeapi.co/api/v2/pokemon/{id}"
         response = requests.get(url)
 
