@@ -14,3 +14,12 @@ router.add_api_route(
     name="Get all pokemon by ability id",
     response_model=Optional[AbilityResponse],
 )
+
+router.add_api_route(
+    "/byname",
+    AbilityResource.get_pokemon_by_ability_name,
+    methods=["POST"],
+    tags=["ability"],
+    name="Get all pokemon by ability name",
+    response_model=Optional[AbilityResponse],
+)

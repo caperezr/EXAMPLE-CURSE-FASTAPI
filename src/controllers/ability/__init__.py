@@ -2,6 +2,7 @@ from fastapi import Depends
 from starlette.endpoints import HTTPEndpoint
 import requests
 from validators.ability.response import AbilityResponse
+from validators.ability.request import AbilityRequest
 from utils.ability.pokemon import Pokemon
 
 
@@ -11,21 +12,33 @@ class AbilityResource(HTTPEndpoint):
         url = f"https://pokeapi.co/api/v2/ability/{id}"
         response = requests.get(url)
         data = response.json()
-
         name_ability = data["name"]
-
         listpokemonbyalility = []
-
         for pokemon in data["pokemon"]:
             pokemon_name = pokemon["pokemon"]["name"]
-
             pokemon_url = pokemon["pokemon"]["url"]
-
             pokemon_data = Pokemon(name=pokemon_name, url=pokemon_url)
             listpokemonbyalility.append(pokemon_data)
-
         pokemonsbyability = AbilityResponse(
             name=name_ability, pokemon=listpokemonbyalility
         )
-
         return pokemonsbyability
+
+    @staticmethod
+    async def get_pokemon_by_ability_name(datas: AbilityRequest):
+        name_ability = datas.name
+        url = f"https://pokeapi.co/api/v2/ability/{name_ability}"
+        response = requests.get(url)
+        listpokemonbyalility = []
+        if response.status_code == 200:
+            data = response.json()
+            for pokemon in data["pokemon"]:
+                pokemon_name = pokemon["pokemon"]["name"]
+                pokemon_url = pokemon["pokemon"]["url"]
+                pokemon_data = Pokemon(name=pokemon_name, url=pokemon_url)
+                listpokemonbyalility.append(pokemon_data)
+            pokemonsbyability = AbilityResponse(
+            name=name_ability, pokemon=listpokemonbyalility)
+            return pokemonsbyability
+        else:
+            return None
