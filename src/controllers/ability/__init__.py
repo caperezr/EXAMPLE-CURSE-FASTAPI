@@ -7,6 +7,25 @@ from utils.ability.pokemon import Pokemon
 
 
 class AbilityResource(HTTPEndpoint):
+    
+    @staticmethod
+    async def get_all_ability():
+        url = "https://pokeapi.co/api/v2/ability/"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            results = data["results"]
+            
+            ability_list = []
+            for result in results:
+                name = result["name"]
+                url = result["url"]
+                ability_data = AbilityResponse(name=name, url=url)
+                ability_list.append(ability_data)
+            return ability_list
+        else:
+            return None
+    
     @staticmethod
     async def get_pokemon_by_ability(id: int):
         url = f"https://pokeapi.co/api/v2/ability/{id}"

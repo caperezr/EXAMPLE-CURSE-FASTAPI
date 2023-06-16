@@ -7,6 +7,15 @@ router = APIRouter(prefix="/ability")
 
 # Routes for the API
 router.add_api_route(
+    "/all",
+    AbilityResource.get_all_ability,
+    methods=["GET"],
+    tags=["ability"],
+    name="Get all abilities",
+    response_model=list[AbilityResponse],
+)
+
+router.add_api_route(
     "/byid/{id}",
     AbilityResource.get_pokemon_by_ability,
     methods=["GET"],
