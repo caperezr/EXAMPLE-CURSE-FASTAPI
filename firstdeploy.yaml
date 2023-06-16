@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firstdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pokeapiexercise
+  template:
+    metadata:
+      labels:
+        app: pokeapiexercise
+    spec:
+      containers:
+        - name: example-curse-fastapi
+          image: mist3ri0/fastapi:latest
+          ports:
+            - containerPort: 5000
+
+
+
