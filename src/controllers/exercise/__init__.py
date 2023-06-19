@@ -11,4 +11,8 @@ class ExerciseResource(HTTPEndpoint):
     
     @staticmethod
     async def get_field(request):
-        return None
+        argument1 = request.args.get("argument1")
+        argument2 = request.args.get("argument2")
+        print("argumento 1: ", argument1)
+        print("argumento 2: ", argument2)
+        return False
