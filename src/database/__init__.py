@@ -1,10 +1,12 @@
 from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from configs import connection_database_engine
 
-DATABASE_URL = "postgresql://sonarqube:sonarpass@192.168.1.4/fastapidb"
+""" DATABASE_URL = "postgresql://sonarqube:sonarpass@192.168.1.4/fastapidb"
 engine = create_engine(DATABASE_URL)
-Base = declarative_base(bind=engine)
+Base = declarative_base(bind=engine) """
+engine, Base, Session = connection_database_engine()
 
 
 class WarehouseType(Base):
