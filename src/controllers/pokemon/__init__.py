@@ -1,7 +1,7 @@
-from fastapi import Depends
+from fastapi import Depends, Query, Path, Body, Form, File
 from starlette.endpoints import HTTPEndpoint
 from validators.pokemon.response import PokemonResponse
-from validators.pokemon.request import PokemonRequest
+from validators.pokemon.request import PokemonRequest, Tipado_b
 import requests
 
 
@@ -27,7 +27,7 @@ class PokemonResource(HTTPEndpoint):
             return None
 
     @staticmethod
-    async def get_byname_pokemon_filter(datas: PokemonRequest):
+    async def get_byname_pokemon_filter(datas: Tipado_b = Depends()):
         name_pokemon = datas.name
         url = "https://pokeapi.co/api/v2/pokemon/"
         response = requests.get(url)
@@ -46,10 +46,10 @@ class PokemonResource(HTTPEndpoint):
             return None
 
     @staticmethod
-    async def get_byid_pokemon_filter(id: int):
+    async def get_byid_pokemon_filter(id: int = Path(...), var_a: str = Query(None)):
         url = f"https://pokeapi.co/api/v2/pokemon/{id}"
         response = requests.get(url)
-
+        print("nombre: ", var_a)
         if response.status_code == 200:
             data = response.json()
             id = data["id"]
