@@ -10,7 +10,7 @@ RUN python -m pip install uvicorn
 
 RUN pip install -r ./requirement_local.txt
 
-WORKDIR /app/example-curse-fastapi
+WORKDIR /app/example-curse-fastapi/src
 
 CMD ["uvicorn", "app:app", "--reload", "--host", "0.0.0.0", "--port", "5000"]
 
