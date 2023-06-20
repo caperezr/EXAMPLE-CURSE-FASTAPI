@@ -8,7 +8,10 @@ class PokemonRequest(BaseModel):
 
 
 class Tipado_b:
-    def __init__(self, variable_c: int = Body(), var_b: int = Body(...)) -> None:
+    def __init__(
+        self, name: str = Body(), variable_c: int = Body(), var_b: int = Body(...)
+    ) -> None:
+        self.name = name
         self.variable_c = variable_c
         self.var_b = var_b
 

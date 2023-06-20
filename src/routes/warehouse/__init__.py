@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from controllers.db import DatabaseResource
-from validators.db.response import WarehouseTypeResponse
+from controllers.warehouse import DatabaseResource
+from validators.warehouse.response import WarehouseTypeResponse
 
 router = APIRouter(prefix="/database")
 

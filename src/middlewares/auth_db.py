@@ -3,6 +3,8 @@ from typing import Callable
 from fastapi import Request, Response
 from fastapi.routing import APIRoute
 from configs.environment import Config
+from exceptions.fast_api_custom import CustomException
+from database.session import SessionLocal
 
 # from exceptions.fast_api_custom import CustomException
 # from database.session import SessionLocal
@@ -20,7 +22,7 @@ class AuthDbMiddleware(APIRoute):
         ) -> Response:  # pylint: disable=too-many-branches
             try:
                 logger.info(f"headers: {request.headers}")
-                request_authorization = request.headers.get("Authorization", None)
+                """ request_authorization = request.headers.get("Authorization", None)
                 if not request_authorization:
                     raise CustomException(
                         status_code=412,
@@ -44,11 +46,11 @@ class AuthDbMiddleware(APIRoute):
                         status_code=401,
                         type="indetifier",
                         detail="El identificador del JWT es invalido!",
-                    )
-                request.state.authorization = request_authorization
-                request.state.organization_id = request.headers.get(
-                    "organizationId", None
-                )
+                    ) """
+                # request.state.authorization = request_authorization
+                # request.state.organization_id = request.headers.get(
+                #    "organizationId", None
+                # )
                 ## Session DB
                 request.state.db = SessionLocal()
                 ## Time Response

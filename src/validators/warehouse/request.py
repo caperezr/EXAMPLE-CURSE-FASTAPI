@@ -3,5 +3,5 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 
-class WarehouseTaypeRequest(BaseModel):
+class WarehouseTypeRequest(BaseModel):
     name: str

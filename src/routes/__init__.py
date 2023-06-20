@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from routes.pokemon import router as pokemon_router
 from routes.ability import router as ability_router
 from routes.exercise import router as exercise_router
-from routes.db import router as db_router
+from routes.warehouse import router as db_router
 
 router = APIRouter(prefix="/api")
 
