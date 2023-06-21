@@ -5,11 +5,11 @@ from models import BaseCrudModel
 from database.session import Base, engine
 
 
-class WarehousetypeModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
-    __tablename__ = "WarehouseType"
+class ProductTypeModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
+    __tablename__ = "ProductType"
     __table_args__ = {"schema": "public"}
 
-    name: str = Column(String(255), default=None)
+    name = Column(String(255), default=None)
 
 
 Base.metadata.create_all(bind=engine)

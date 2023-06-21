@@ -1,46 +1,71 @@
-from fastapi import Depends
+from fastapi import Depends, Path, Body
 from starlette.endpoints import HTTPEndpoint
-from validators.warehouse.response import WarehouseTypeResponse
-from validators.warehouse.request import WarehouseTypeRequest
-from database import WarehouseType
-from configs import connection_database_engine
-from typing import List
+from validators.warehouse.response import WarehouseTypeResponse, ResponseTemplateSchema
+from validators.warehouse.request import WarehouseTypeRequest, RequestTemplateSchema
+from models.warehousetype import WarehousetypeModel
+from models.producttype import ProductTypeModel
+from database.get_db import get_db
+from sqlalchemy.orm import Session
 
-engine, Base, Session = connection_database_engine()
+
+from typing import List
 
 
 class DatabaseResource(HTTPEndpoint):
+    # CRUD WAREHOUSE TYPE
     @staticmethod
-    async def create_warehousetype(data: WarehouseTypeRequest):
-        warehouse_type_data = WarehouseType(name=data.name)
-        session = Session()
-        session.add(warehouse_type_data)
-        session.commit()
-        data_response = WarehouseTypeResponse(
-            id=warehouse_type_data.id, name=warehouse_type_data.name
+    async def create_warehousetype(
+        data: WarehouseTypeRequest, db_session: Session = Depends(get_db)
+    ):
+        new_warehouse_type = WarehousetypeModel.create(db_session, name=data.name)
+        warehouse_types_response = WarehouseTypeResponse(
+            id=new_warehouse_type.id, name=new_warehouse_type.name
         )
-        return data_response
+        return warehouse_types_response
 
+    # Preguntar por que ya no es necesario pasarle el db_session
     @staticmethod
     async def get_warehouse_types() -> List[WarehouseTypeResponse]:
-        session = Session()
-        warehouse_types = session.query(WarehouseType).all()
+        warehouse_types_model = WarehousetypeModel.read_select()
         warehouse_types_response = [
-            WarehouseTypeResponse(id=wt.id, name=wt.name) for wt in warehouse_types
+            WarehouseTypeResponse(id=wt.id, name=wt.name)
+            for wt in warehouse_types_model
         ]
         return warehouse_types_response
 
+    # Preguntar por que al id: str no se le puede poner Path
     @staticmethod
     async def update_warehousetype(
-        id: int, data: WarehouseTypeRequest
-    ) -> WarehouseTypeResponse:
-        session = Session()
-        warehouse_type = (
-            session.query(WarehouseType).filter(WarehouseType.id == id).first()
+        id: str,
+        data: WarehouseTypeRequest = Body(...),
+        db_session: Session = Depends(get_db),
+    ):
+        warehouse_type_model = WarehousetypeModel.update(db_session, id, name=data.name)
+
+        warehouse_types_response = WarehouseTypeResponse(
+            id=warehouse_type_model.id, name=warehouse_type_model.name
         )
+        return warehouse_types_response
 
-        if warehouse_type:
-            warehouse_type.name = data.name
-            session.commit
+    # CRUD PRODUCT TYPE
+    @staticmethod
+    async def create_product_type(
+        data: RequestTemplateSchema = Body(...), db_session: Session = Depends(get_db)
+    ):
+        new_product_type = ProductTypeModel.create(db_session, name=data.name)
+        product_type_response = ResponseTemplateSchema(
+            id=new_product_type.id, name=new_product_type.name
+        )
+        return product_type_response
 
-        return WarehouseTypeResponse(id=warehouse_type.id, name=warehouse_type.name)
+    @staticmethod
+    async def get_product_types():
+        product_types_model = ProductTypeModel.read_select()
+        product_types_respose = [
+            ResponseTemplateSchema(id=pt.id, name=pt.name) for pt in product_types_model
+        ]
+        return product_types_respose
+
+    @staticmethod
+    async def update_product_type():
+        return None

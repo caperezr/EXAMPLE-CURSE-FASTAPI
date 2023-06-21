@@ -5,9 +5,6 @@ from fastapi.routing import APIRoute
 from configs.environment import Config
 from exceptions.fast_api_custom import CustomException
 from database.session import SessionLocal
-
-# from exceptions.fast_api_custom import CustomException
-# from database.session import SessionLocal
 from services.logging import logger
 
 # from jose import jwt

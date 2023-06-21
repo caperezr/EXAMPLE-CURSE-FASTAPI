@@ -5,3 +5,7 @@ from pydantic import BaseModel
 
 class WarehouseTypeRequest(BaseModel):
     name: str
+
+
+class RequestTemplateSchema(BaseModel):
+    name: str

@@ -51,5 +51,5 @@ class WarehouseXProduct(Base):
     product = relationship("Product", backref="product_warehouses")
 
 
-def create_tables():
-    Base.metadata.create_all(engine)
+""" def create_tables():
+    Base.metadata.create_all(engine) """
