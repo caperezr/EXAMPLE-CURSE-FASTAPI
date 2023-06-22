@@ -20,5 +20,9 @@ class ProductModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
     idProductType = Column(type_id_uuid, ForeignKey("ProductType.id"))
     product_type = relationship("ProductTypeModel", back_populates="products")
 
+    productxwarehouses = relationship(
+        "WarehouseXProductModel", back_populates="product"
+    )
+
 
 Base.metadata.create_all(bind=engine)

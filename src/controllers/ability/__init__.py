@@ -1,13 +1,12 @@
 from fastapi import Depends
 from starlette.endpoints import HTTPEndpoint
 import requests
-from validators.ability.response import AbilityResponse
+from validators.ability.response import AbilityResponse, TemplateResponseById
 from validators.ability.request import AbilityRequest
 from utils.ability.pokemon import Pokemon
 
 
 class AbilityResource(HTTPEndpoint):
-    
     @staticmethod
     async def get_all_ability():
         url = "https://pokeapi.co/api/v2/ability/"
@@ -15,7 +14,7 @@ class AbilityResource(HTTPEndpoint):
         if response.status_code == 200:
             data = response.json()
             results = data["results"]
-            
+
             ability_list = []
             for result in results:
                 name = result["name"]
@@ -25,7 +24,7 @@ class AbilityResource(HTTPEndpoint):
             return ability_list
         else:
             return None
-    
+
     @staticmethod
     async def get_pokemon_by_ability(id: int):
         url = f"https://pokeapi.co/api/v2/ability/{id}"
@@ -38,7 +37,7 @@ class AbilityResource(HTTPEndpoint):
             pokemon_url = pokemon["pokemon"]["url"]
             pokemon_data = Pokemon(name=pokemon_name, url=pokemon_url)
             listpokemonbyalility.append(pokemon_data)
-        pokemonsbyability = AbilityResponse(
+        pokemonsbyability = TemplateResponseById(
             name=name_ability, pokemon=listpokemonbyalility
         )
         return pokemonsbyability
@@ -56,8 +55,9 @@ class AbilityResource(HTTPEndpoint):
                 pokemon_url = pokemon["pokemon"]["url"]
                 pokemon_data = Pokemon(name=pokemon_name, url=pokemon_url)
                 listpokemonbyalility.append(pokemon_data)
-            pokemonsbyability = AbilityResponse(
-            name=name_ability, pokemon=listpokemonbyalility)
+            pokemonsbyability = TemplateResponseById(
+                name=name_ability, pokemon=listpokemonbyalility
+            )
             return pokemonsbyability
         else:
             return None

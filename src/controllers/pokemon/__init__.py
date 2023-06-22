@@ -1,6 +1,6 @@
 from fastapi import Depends, Query, Path, Body, Form, File
 from starlette.endpoints import HTTPEndpoint
-from validators.pokemon.response import PokemonResponse
+from validators.pokemon.response import PokemonResponse, ResponseTemplete
 from validators.pokemon.request import PokemonRequest, Tipado_b
 import requests
 
@@ -19,7 +19,7 @@ class PokemonResource(HTTPEndpoint):
             for result in results:
                 name = result["name"]
                 url = result["url"]
-                pokemon_data = PokemonResponse(name=name, url=url)
+                pokemon_data = ResponseTemplete(name=name, url=url)
                 pokemon_list.append(pokemon_data)
 
             return pokemon_list

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from controllers.ability import AbilityResource
-from validators.ability.response import AbilityResponse
+from validators.ability.response import AbilityResponse, TemplateResponseById
 from typing import Optional
 
 router = APIRouter(prefix="/ability")
@@ -21,7 +21,7 @@ router.add_api_route(
     methods=["GET"],
     tags=["ability"],
     name="Get all pokemon by ability id",
-    response_model=Optional[AbilityResponse],
+    response_model=Optional[TemplateResponseById],
 )
 
 router.add_api_route(
@@ -30,5 +30,5 @@ router.add_api_route(
     methods=["POST"],
     tags=["ability"],
     name="Get all pokemon by ability name",
-    response_model=Optional[AbilityResponse],
+    response_model=Optional[TemplateResponseById],
 )

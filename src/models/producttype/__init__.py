@@ -5,7 +5,7 @@ from models.id import IdUuid
 from models import BaseCrudModel
 from database.session import Base, engine
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
-from models.id import IdUuid, type_id_uuid
+
 from sqlalchemy.orm import relationship
 
 

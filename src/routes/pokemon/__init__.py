@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from controllers.pokemon import PokemonResource
-from validators.pokemon.response import PokemonResponse
+from validators.pokemon.response import PokemonResponse, ResponseTemplete
 from typing import Optional
 
 router = APIRouter(prefix="/pokemon")
@@ -12,7 +12,7 @@ router.add_api_route(
     methods=["GET"],
     tags=["pokemon"],
     name="Get all pokemon",
-    response_model=list[PokemonResponse],
+    response_model=list[ResponseTemplete],
 )
 
 router.add_api_route(
@@ -21,7 +21,7 @@ router.add_api_route(
     methods=["POST"],
     tags=["pokemon"],
     name="Get pokemon by name",
-    response_model=Optional[PokemonResponse],
+    response_model=Optional[ResponseTemplete],
 )
 
 router.add_api_route(

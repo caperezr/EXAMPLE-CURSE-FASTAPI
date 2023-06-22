@@ -17,3 +17,21 @@ class ResponseTemplateSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ResponseTemplateWarehouse(BaseModel):
+    id: UUID4
+    idWarehouseType: UUID4
+    name: str
+
+    class Config:
+        orm_mode = True
+
+
+class ResponseTemplateWarehouseXProudct(BaseModel):
+    stock = int
+    idWarehouse = UUID4
+    idProduct = UUID4
+
+    class Config:
+        orm_mode = True

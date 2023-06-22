@@ -8,7 +8,7 @@ from configs.environment import Config
 from fastapi.exceptions import RequestValidationError
 from utils.responses import ResponseJson
 from fastapi.middleware.cors import CORSMiddleware
-from database import create_tables
+
 
 ## Exceptions
 from exceptions.fast_api_validation import ValidationException
@@ -44,13 +44,6 @@ app.add_exception_handler(CustomException, http_exception_handler_custom)
 app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(ValidationException, validation_exception_handler)
-
-
-""" @app.on_event("startup")
-async def startup():
-    print(Config.DOCS_URL),
-    print(Config.DB_HOST)
-    create_tables() """
 
 
 app.include_router(root)

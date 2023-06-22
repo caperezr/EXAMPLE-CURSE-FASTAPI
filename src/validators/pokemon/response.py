@@ -6,3 +6,8 @@ class PokemonResponse(BaseModel):
     name: str
     url: Optional[str]
     imgUrl: Optional[str]
+
+
+class ResponseTemplete(BaseModel):
+    name: str
+    url: Optional[str]
