@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     DOCS_URL: str = os.environ.get("DOCS_URL", None)
     REDOC_URL: str = os.environ.get("REDOC_URL", None)
 
+    # JWT
+    AWS_JWT_PREFIX: str = os.environ.get("AWS_JWT_PREFIX", "")
+    JWT_HASH_KEY: str = os.environ.get("JWT_HASH_KEY", "")
+
     # CORE DB
     DB_HOST: str = os.environ.get("DB_HOST", "")
     SQLALCHEMY_ENGINE_OPTIONS_POOL_RECYCLE: int = os.environ.get(

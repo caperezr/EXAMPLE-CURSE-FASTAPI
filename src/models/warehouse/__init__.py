@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer, ForeignKey
 from models.timestamp import TimestampMixin
 from models.id import IdUuid
 from models import BaseCrudModel
@@ -7,11 +7,12 @@ from database.session import Base, engine
 
 
 @dataclass
-class WarehousetypeModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
-    __tablename__ = "WarehouseType"
+class WarehouseModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
+    __tablename__ = "Warehouse"
     # __table_args__ = {"schema": "public"}
 
-    name: str = Column(String(255), default=None)
+    idWarehouseType = Column(Integer, ForeignKey("WarehouseType.id"))
+    name = Column(String(255))
 
 
 Base.metadata.create_all(bind=engine)

@@ -4,6 +4,7 @@ WORKDIR /app/example-curse-fastapi
 
 COPY src/ .
 COPY requirement_local.txt .
+COPY .env .
 
 RUN python -m pip install --upgrade pip
 RUN python -m pip install uvicorn

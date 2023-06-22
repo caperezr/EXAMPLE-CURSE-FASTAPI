@@ -3,8 +3,9 @@ from controllers.warehouse import DatabaseResource
 from validators.warehouse.response import WarehouseTypeResponse, ResponseTemplateSchema
 from middlewares.auth_db import AuthDbMiddleware
 
-router = APIRouter(prefix="/database", route_class=AuthDbMiddleware)
 
+router = APIRouter(prefix="/database", route_class=AuthDbMiddleware)
+# CRUD WAREHOUSETYPE
 router.add_api_route(
     "/warehousetype",
     DatabaseResource.create_warehousetype,
@@ -24,7 +25,7 @@ router.add_api_route(
 )
 
 router.add_api_route(
-    "/updatewarehouse",
+    "/updatewarehousetype",
     DatabaseResource.update_warehousetype,
     methods=["PATCH"],
     tags=["database warehousetype service"],
@@ -32,12 +33,13 @@ router.add_api_route(
     response_model=WarehouseTypeResponse,
 )
 
+# CRUD PRODUCTTYPE
 router.add_api_route(
     "/producttype",
     DatabaseResource.create_product_type,
     methods=["POST"],
     tags=["database warehousetype service"],
-    name="Create WarehouseType",
+    name="Create Product type",
     response_model=ResponseTemplateSchema,
 )
 
@@ -46,6 +48,15 @@ router.add_api_route(
     DatabaseResource.get_product_types,
     methods=["GET"],
     tags=["database warehousetype service"],
-    name="Get all Warehouses type",
+    name="Get all product types",
     response_model=list[ResponseTemplateSchema],
+)
+
+router.add_api_route(
+    "/updateproducttype",
+    DatabaseResource.update_product_type,
+    methods=["PUT"],
+    tags=["database warehousetype service"],
+    name="Update Product Type",
+    response_model=ResponseTemplateSchema,
 )

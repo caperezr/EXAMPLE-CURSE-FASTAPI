@@ -6,8 +6,7 @@ from configs.environment import Config
 from exceptions.fast_api_custom import CustomException
 from database.session import SessionLocal
 from services.logging import logger
-
-# from jose import jwt
+from jose import jwt
 
 
 class AuthDbMiddleware(APIRoute):
@@ -19,7 +18,7 @@ class AuthDbMiddleware(APIRoute):
         ) -> Response:  # pylint: disable=too-many-branches
             try:
                 logger.info(f"headers: {request.headers}")
-                """ request_authorization = request.headers.get("Authorization", None)
+                request_authorization = request.headers.get("Authorization", None)
                 if not request_authorization:
                     raise CustomException(
                         status_code=412,
@@ -28,26 +27,34 @@ class AuthDbMiddleware(APIRoute):
                         code=995,
                     )
                 access_token_key = request_authorization.split(" ")[0]
+                logger.info(f"primer elemento: , {access_token_key}")
                 access_token_jwt = request_authorization.split(" ")[1]
+                print("token prefijo: ", access_token_key)
+                print("token key: ", access_token_jwt)
+
                 if access_token_key != Config.AWS_JWT_PREFIX:
                     raise CustomException(
                         status_code=401,
                         type="indetifier",
                         detail="El identificador del JWT es invalido!",
                     )
+
                 toke_decode = jwt.decode(
                     access_token_jwt, Config.JWT_HASH_KEY, algorithms=["HS256"]
                 )
+
                 if toke_decode.get("service", "") != "flow":
                     raise CustomException(
                         status_code=401,
                         type="indetifier",
                         detail="El identificador del JWT es invalido!",
-                    ) """
+                    )
+
                 # request.state.authorization = request_authorization
                 # request.state.organization_id = request.headers.get(
                 #    "organizationId", None
                 # )
+
                 ## Session DB
                 request.state.db = SessionLocal()
                 ## Time Response
