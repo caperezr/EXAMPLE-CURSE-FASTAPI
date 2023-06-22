@@ -36,3 +36,49 @@ class ProductResource(HTTPEndpoint):
             totalStock=new_product.totalStock,
         )
         return product_response
+
+    @staticmethod
+    async def get_products(
+        _authorization=Depends(APIKeyHeader(name="Authorization")),
+    ) -> List[ProductResponse]:
+        products_model = ProductModel.read_select()
+        products_response = [
+            ProductResponse(
+                id=p.id,
+                idProductType=p.idProductType,
+                name=p.name,
+                sku=p.sku,
+                partNumber=p.partNumber,
+                cost=p.cost,
+                totalStock=p.totalStock,
+            )
+            for p in products_model
+        ]
+        return products_response
+
+    @staticmethod
+    async def update_product(
+        id: str,
+        data: ProductRequest = Body(...),
+        _authorization=Depends(APIKeyHeader(name="Authorization")),
+        db_session: Session = Depends(get_db),
+    ):
+        product_model = ProductModel.update(
+            db_session,
+            id,
+            name=data.name,
+            sku=data.sku,
+            partNumber=data.partNumber,
+            cost=data.cost,
+            totalStock=data.totalStock,
+        )
+        product_response = ProductResponse(
+            id=product_model.id,
+            idProductType=product_model.idProductType,
+            name=product_model.name,
+            sku=product_model.sku,
+            partNumber=product_model.partNumber,
+            cost=product_model.cost,
+            totalStock=product_model.totalStock,
+        )
+        return product_response

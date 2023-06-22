@@ -29,9 +29,10 @@ class ResponseTemplateWarehouse(BaseModel):
 
 
 class ResponseTemplateWarehouseXProudct(BaseModel):
-    stock = int
-    idWarehouse = UUID4
-    idProduct = UUID4
+    id: UUID4
+    stock: int
+    idWarehouse: UUID4
+    idProduct: UUID4
 
     class Config:
         orm_mode = True

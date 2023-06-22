@@ -17,6 +17,6 @@ class RequestTemplateWarehouse(BaseModel):
 
 
 class RequestTemplateWarehouseXProudct(BaseModel):
-    stock = int
-    idWarehouse = UUID4
-    idProduct = UUID4
+    stock: int
+    idWarehouse: UUID4
+    idProduct: UUID4

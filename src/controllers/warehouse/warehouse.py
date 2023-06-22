@@ -28,3 +28,38 @@ class WarehouseResource(HTTPEndpoint):
             name=new_warehouse.name,
         )
         return warehouse_response
+
+    @staticmethod
+    async def get_warehouses(
+        _authorization=Depends(APIKeyHeader(name="Authorization")),
+    ) -> List[ResponseTemplateWarehouse]:
+        warehouses_model = WarehouseModel.read_select()
+        warehouses_response = [
+            ResponseTemplateWarehouse(
+                id=w.id,
+                idWarehouseType=w.idWarehouseType,
+                name=w.name,
+            )
+            for w in warehouses_model
+        ]
+        return warehouses_response
+
+    @staticmethod
+    async def update_warehouse(
+        id: str,
+        data: RequestTemplateWarehouse = Body(...),
+        _authorization=Depends(APIKeyHeader(name="Authorization")),
+        db_session: Session = Depends(get_db),
+    ):
+        warehouse_model = WarehouseModel.update(
+            db_session,
+            id,
+            idWarehouseType=data.idWarehouseType,
+            name=data.name,
+        )
+        warehouse_response = ResponseTemplateWarehouse(
+            id=warehouse_model.id,
+            idWarehouseType=warehouse_model.idWarehouseType,
+            name=warehouse_model.name,
+        )
+        return warehouse_response
