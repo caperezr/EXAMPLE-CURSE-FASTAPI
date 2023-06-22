@@ -1,0 +1,46 @@
+service: inventory-service
+# app and org for use with dashboard.serverless.com
+app: inventory-service
+#org: your-org-name
+
+useDotenv: True
+plugins:
+  - serverless-python-requirements
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-bundle
+  #- serverless-deployment-bucket
+custom:
+  serverless-offline:
+    lambdaPort: 5891
+    httpPort: 5890
+    noTimeout: True
+    noCache: True
+
+  pythonRequirements:
+    dockerizePip: true
+    noDeploy: []
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: "3"
+
+
+provider:
+  name: aws
+  runtime: python3.10
+  stage: dev
+  region: us-east-1
+  
+
+  
+  # you can define service wide environment variables here
+  environment:
+    DOCS_URL: ${env:DOCS_URL}
+    REDOC_URL: ${env:REDOC_URL}
+    DB_HOST: ${env:DB_HOST}
+    AWS_JWT_PREFIX: ${env:AWS_JWT_PREFIX}
+    JWT_HASH_KEY: ${env:JWT_HASH_KEY}
+
+functions:
+  - ${file(functions/api_services/serverless.yml)}

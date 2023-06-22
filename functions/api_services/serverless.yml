@@ -1,0 +1,12 @@
+api-services:
+  handler: src/app.handler
+  timeout: 15
+  package:
+    patterns:
+      - "src/**"
+      - "./requirements.txt"
+
+  events:
+    - httpApi:
+        path: '/{proxy+}'
+        method: any

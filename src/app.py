@@ -8,7 +8,7 @@ from configs.environment import Config
 from fastapi.exceptions import RequestValidationError
 from utils.responses import ResponseJson
 from fastapi.middleware.cors import CORSMiddleware
-
+from mangum import Mangum
 
 ## Exceptions
 from exceptions.fast_api_validation import ValidationException
@@ -47,3 +47,5 @@ app.add_exception_handler(ValidationException, validation_exception_handler)
 
 
 app.include_router(root)
+
+handler = Mangum(app)

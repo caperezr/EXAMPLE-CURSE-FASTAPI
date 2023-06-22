@@ -29,8 +29,10 @@ class AuthDbMiddleware(APIRoute):
                 access_token_key = request_authorization.split(" ")[0]
                 logger.info(f"primer elemento: , {access_token_key}")
                 access_token_jwt = request_authorization.split(" ")[1]
+
                 print("token prefijo: ", access_token_key)
                 print("token key: ", access_token_jwt)
+                print("env: ", Config.JWT_HASH_KEY)
 
                 if access_token_key != Config.AWS_JWT_PREFIX:
                     raise CustomException(
@@ -43,7 +45,7 @@ class AuthDbMiddleware(APIRoute):
                     access_token_jwt, Config.JWT_HASH_KEY, algorithms=["HS256"]
                 )
 
-                if toke_decode.get("service", "") != "flow":
+                if toke_decode.get("service", "") != "pokemon":
                     raise CustomException(
                         status_code=401,
                         type="indetifier",

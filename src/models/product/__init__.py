@@ -25,4 +25,4 @@ class ProductModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
     )
 
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
