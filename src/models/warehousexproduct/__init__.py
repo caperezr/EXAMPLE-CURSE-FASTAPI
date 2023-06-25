@@ -20,4 +20,4 @@ class WarehouseXProductModel(BaseCrudModel, TimestampMixin, IdUuid, Base):
     warehouse = relationship("WarehouseModel", back_populates="warehousexproducts")
 
 
-# Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)

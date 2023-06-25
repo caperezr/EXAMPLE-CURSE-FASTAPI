@@ -9,6 +9,7 @@ from fastapi.exceptions import RequestValidationError
 from utils.responses import ResponseJson
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
+from fastapi.security import APIKeyHeader
 
 ## Exceptions
 from exceptions.fast_api_validation import ValidationException
@@ -45,6 +46,15 @@ app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(ValidationException, validation_exception_handler)
 
+# Health check
+@root.get('/health-check', tags=['Check'])
+def health_check(_authorization=Depends(APIKeyHeader(name="Authorization"))):
+  """ Root"""
+  return {
+    'status': 'OK',
+    'version': getattr(Config, 'PROJECT_API_VERSION', '0.1.0'),
+    'env': getattr(Config, 'ENV', 'null')
+  }
 
 app.include_router(root)
 
